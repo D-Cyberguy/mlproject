@@ -35,16 +35,16 @@ class DataTransformation:
 
             numerical_pipeline = Pipeline(
                 steps=[
-                    ("imputer", SimpleImputer(strategy="median")),
-                    ("scaler", StandardScaler())
+                    ("imputer", SimpleImputer(strategy="median")),   # handle numerical missing data
+                    ("scaler", StandardScaler())  # scale data
                 ]
             )
 
             categorical_pipeline = Pipeline(
                 steps=[
-                    ("imputer", SimpleImputer(strategy="most_frequent")),
+                    ("imputer", SimpleImputer(strategy="most_frequent")), # handle categorical missing data
                     ("one_hot_encoder", OneHotEncoder()),
-                    ("scaler", StandardScaler(with_mean=False))
+                    ("scaler", StandardScaler(with_mean=False)) # scale data
                 ]
             )
 
