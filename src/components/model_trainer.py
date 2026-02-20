@@ -45,16 +45,54 @@ class ModelTrainer:
                 "Decision_Tree": DecisionTreeRegressor(),
                 "Gradient_Boosting": GradientBoostingRegressor(),
                 "Linear_Regression": LinearRegression(),
-                "K-Neighbors_Regressor": KNeighborsRegressor(),
+                "KNeighbors_Regressor": KNeighborsRegressor(),
                 "XGB_Regressor": XGBRegressor(),
                 "CatBoost_Regressor": CatBoostRegressor(verbose=False),
                 "AdaBoost_Regressor": AdaBoostRegressor()
             }
 
+            params = {
+                "Decision_Tree": {
+                    'criterion': ['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+                },
+
+                "Random_Forest": {
+                    'n_estimators': [8, 16, 32, 64, 128, 256]
+                },
+
+                "Gradient_Boosting": {
+                    'learning_rate': [.1, .01, .05, .001],
+                    'subsample': [0.6, 0.7, 0.75, 0.8, 0.85, 0.9],
+                    'n_estimators': [8, 16, 32, 64, 128, 256]
+                },
+
+                "Linear_Regression": {},
+
+                "KNeighbors_Regressor": {
+                    'n_neighbors': [3,5,7,9,11]
+                },
+
+                "XGB_Regressor": {
+                    'learning_rate': [.1, .01, .05, .001],
+                    'n_estimators': [8, 16, 32, 64, 128, 256]
+                },
+
+                "CatBoost_Regressor": {
+                    'depth': [6, 8, 10],
+                    'learning_rate': [0.01, 0.05, 0.1],
+                    'iterations': [30, 50, 100]
+                },
+
+                "AdaBoost_Regressor": {
+                    'learning_rate': [.1, .01, 0.5, .001],
+                    'n_estimators': [8, 16, 32, 64, 128, 256]
+                }
+            }
+
             model_report: dict = evaluate_models(
                 X_train=X_train, y_train=y_train,
                 X_test=X_test, y_test=y_test,
-                models=models
+                models=models, param=params
             )
 
             best_model_score = max(model_report.values())
