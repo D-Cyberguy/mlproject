@@ -4,15 +4,14 @@ import numpy as np
 
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 
-# IMPORTANT: variable name MUST be "application"
 application = Flask(__name__)
 
-# Home route
+# Home page
 @application.route('/')
 def index():
     return render_template('index.html')
 
-
+# Prediction route
 @application.route('/predictdata', methods=['GET', 'POST'])
 def predict_datapoints():
     if request.method == "GET":
@@ -34,3 +33,7 @@ def predict_datapoints():
         results = predict_pipeline.predict(pred_df)
 
         return render_template('home.html', results=results[0])
+
+# local run only
+if __name__ == "__main__":
+    application.run(host="0.0.0.0", port=5000, debug=True)
